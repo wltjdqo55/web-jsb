@@ -19,8 +19,3 @@
 * 사용자 인터페이스 및 프론트엔드 개발 (Vue.js, HTML, CSS 사용)
 * RESTful API 설계 및 구현
 * 회원가입 시 정규식 사용 (비밀번호, 이메일 등)
-
-
-
-
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter)](https://hits.seeyoufarm.com)
