@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>리스트화면</title>
+</head>
+<style>
+  .layout{
+    width : 2000px;
+    margin : 0 auto;
+    margin-top : 40px;
+
+  .SearchTitleAndContent{
+    margin : 0 auto;
+    width: 100%;
+</style>
+<body>
+<div id="app" class="layout">
+  <div>
+    <label>
+      <select name="businessTypeSelect" v-model="CompanyDTO.searchoption">
+        <option value="all" selected>검색구분</option>
+        <option value="soleProprietorship">개인사업자</option>
+        <option value="corporateBusiness">법인사업자</option>
+      </select>
+    </label>
+    <input type="text" id="search" placeholder="회사명을 입력하세요." class="search" v-model="CompanyDTO.searchkeyword">
+     등록일
+    <input type="date" id="dateStart" v-model="CompanyDTO.startDay"> ~
+    <input type="date" id="dateInput" v-model="CompanyDTO.lastDay">
+    <input type="button" value="검색" @click="search_btn()">
+  </div>
+  <br>
+  <table border="1">
+    <thead>
+    <tr>
+      <th>글번호</th>
+      <th>회사명</th>
+      <th>회사타입</th>
+      <th>사업자번호</th>
+      <th>회사담당자</th>
+      <th>회사담당자 전화</th>
+      <th>대표전화</th>
+      <th>상태</th>
+      <th>주소</th>
+      <th>등록일</th>
+
+    </tr>
+    </thead>
+    <tbody v-for="(company, index) in list" :key="index">
+        <tr>
+          <td>{{company.id}}</td>
+          <td><a :href = "'/company/companyView/' + company.id" >{{company.company}}</a></td>
+          <td>{{company.businesstype}}</td>
+          <td>{{company.businessnumber}}</td>
+          <td>{{company.companyperson}}</td>
+          <td>{{company.companypersonphone}}</td>
+          <td>{{company.representativetelephone}}</td>
+          <td>{{company.status}}</td>
+          <td>{{company.postaddress}}{{company.detailaddress}}</td>
+          <td>{{company.writeTime}}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+  <a href = "join">등록</a>
+
+</div>
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script>
+     const d = new Date();
+     const day = d.getDate();
+     const month = d.getMonth();
+     const year = d.getFullYear();
+
+   new Vue({
+       el: "#app",
+       data: {
+           list: [],
+           CompanyDTO : {
+             searchoption : 'all',
+             searchkeyword : '',
+             startDay : new Date(new Date().setYear(year - 3)).toISOString().substring(0, 10),
+             lastDay :  new Date().toISOString().substring(0, 10)
+           }
+       },
+       methods: {
+           loadData() {
+               axios.get('/company/getCompanylist')
+                   .then(response => {
+                       this.list = response.data;
+                   })
+                   .catch(error => {
+                       console.error('Error fetching data:', error);
+                   });
+           },
+           search_btn() {
+                   let url = '/company/searchCompanyList';
+                   axios.get(url,{
+                      params:{
+                         searchoption : this.CompanyDTO.searchoption,
+                         searchkeyword : this.CompanyDTO.searchkeyword,
+                         startDay : this.CompanyDTO.startDay,
+                         lastDay : this.CompanyDTO.lastDay
+                      }
+                    })
+                     .then(response => {
+                           this.list = response.data;
+                     })
+                   .catch(error => {
+                       console.error('Error fetching data:', error);
+                   });
+           }
+       },
+       mounted() {
+           this.loadData();
+       },
+   });
+</script>
+</body>
+</html>

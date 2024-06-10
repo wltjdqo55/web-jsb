@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <meta charset="UTF-8">
+  <title>userAdd</title>
+  <style>
+    .firstType{
+      display : flex;
+      width : 450px;
+      margin-bottom : 10px;
+    }
+    .secondType{
+      padding-left:30px;
+      display : flex;
+      width : 450px;
+      margin-bottom : 10px;
+    }
+    .good{
+      display : flex;
+    }
+    .one_div{
+      border : 1px solid black;
+      padding : 5px;
+      width: 105px;
+      align : center;
+    }
+    .one_div_ok{
+      border : 1px solid black;
+      padding : 5px;
+      width: 100px;
+    }
+    .two_div{
+      border : 1px solid black;
+      padding : 5px;
+      width: 200px;
+    }
+    .two_div_ok{
+      border : 1px solid black;
+      padding : 5px;
+      width: 350px;
+    }
+    .user{
+      border : none;
+      width: 100%;
+      height : 20px;
+    }
+    .userId_Chk_btn{
+      padding : 6px;
+      width: 150px
+    }
+    .userAddress_btn{
+      padding : 6px;
+      width: 80px
+    }
+    .one_div_oko{
+      border : 1px solid black;
+      padding : 5px;
+      width: 130px;
+    }
+    .two_div_okkk{
+      border : 1px solid black;
+      padding : 5px;
+      width: 350px;
+      margin-left: 105px;
+    }
+    .two_div_note{
+       border : 1px solid black;
+      padding : 5px;
+      width: 811px;
+    }
+    .notegood{
+      width: 95px;
+    }
+    .sub{
+      padding: 10px;
+      width : 920px;
+    }
+    .last_btn{
+      padding : 7px;
+      float : right;
+    }
+    .firstbtn{
+      width: 80px;
+      margin : 5px;
+    }
+    .secondbtn{
+      width: 80px;
+      margin: 5px;
+    }
+    .a {
+      margin-left : 110px;
+      color : red;
+      font-size : 10px;
+    }
+    .b {
+      margin-left : 0px;
+      color : red;
+      font-size : 10px;
+    }
+    .fileClass {
+      float : right;
+      padding : 20px;
+      background-color : blue;
+      color : white;
+      border : none;
+      border-radius : 7px;
+      cursor : pointer;
+    }
+    .filesG{
+      margin-top : 10px;
+    }
+    .fileCh{
+      justify-content:center;
+      align-items : center;
+      display:flex;
+      margin-top: 17px;
+    }
+    .spanClass{
+        justify-content:center;
+      align-items : center;
+      display:flex;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <h2>사용자 정보 등록</h2>
+  <form method="post">
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div"><span class="spanClass"><label for="userId">아이디 *</label></span></div>
+        <div class="two_div"><input type="text" id="userId" name="userId" class="user" placeholder="아이디를 입력해주세요." v-model="userTb.userId" @input="idCheck" maxlength="50" ref="userId"></div>
+        <div class="three_div"><button @click="userIdChk()" class="userId_Chk_btn" type="button">아이디 중복확인</button></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass"><label for="userPassword">비밀번호</label></span></div>
+        <div class="two_div_ok"><input type="password" id="userPassword" class="user" name="userPassword" placeholder="비밀번호를 입력해주세요." v-model="userTb.userPassword" maxlength="20" @input="passwordCheck" ref="userPassword"></div>
+      </div>
+    </div>
+    <div class="good">
+        <div class="firstType a">
+          {{checked.userIdErrorMessage}}
+        </div>
+        <div class="secondType b">
+          {{checked.userPasswordErrorMessage}}
+        </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass"><label for="name">이름 *</label></span></div>
+        <div class="two_div_ok"><input type="text" id="name" name="name" class="user" placeholder="이름을 입력해주세요." v-model="userTb.userName" @input="nameCheck" maxlength="20" ref="userName"></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass"><label for="userPhone">휴대폰 *</label></span></div>
+        <div class="two_div_ok"><input type="text" id="userPhone" class="user" name="userPhone" placeholder="숫자만 입력해 주세요.(-)제외" v-model="userTb.userPhone" @input="phoneCheck" maxlength="15" ref="userPhone"></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType a">
+        {{checked.userNameErrorMessage}}
+      </div>
+      <div class="secondType b">
+        {{checked.userPhoneErrorMessage}}
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass"><label for="userBirth">생년월일</label></span></div>
+        <div class="two_div_ok"><input type="date" id="userBirth" name="userBirth" class="user" v-model="userTb.userBirth"></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_oko"><span class="spanClass"><label for="userPostAddress">집주소</label></span></div>
+        <div class="two_div_ok"><input type="text" name="userPostAddress" id="userPostAddress" class="user" placeholder="주소를 검색해주세요." v-model="userTb.userPostAddress" readonly></div>
+        <div class="three_div_ok"><input type="button" value="주소검색" class="userAddress_btn" @click="addressBtn()"><br></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass">성별 *</span></div>
+        <div class="two_div_ok">
+          <input type="radio" name="gender" value="man" v-model="userTb.gender">남자&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="gender" value="woman" v-model="userTb.gender">여자
+        </div>
+      </div>
+      <div class="secondType">
+        <div class="two_div_okkk"><input type="text" id="userDetailAddress" class="user" name="userDetailAddress" placeholder="상세주소를 입력해 주세요." v-model="userTb.userDetailAddress" :disabled="userTb.userPostAddress.length<1"></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div"><span class="spanClass">회사명</span></div>
+        <div class="two_div"><!--<input type="text" id="company" name="company" class="user" placeholder="회사메뉴에서 지정 가능합니다." readonly>-->
+          <select v-model="userTb.companyId">
+               <option value="companyChoice" selected>회사를 선택해주세요.</option>
+               <option :key="index" :value="company.id" v-for="(company, index) in myCompany">{{company.company}}</option>
+          </select>
+        </div>
+        <div class="three_div"><button class="userId_Chk_btn" type="button">회사 선택</button></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass"><label for="position">직위</label></span></div>
+        <div class="two_div_ok"><input type="text" id="position" class="user" name="position" placeholder="직위를 입력해 주세요." v-model="userTb.position" maxlength="20"></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass"><label for="departmentName">부서명</label></span></div>
+        <div class="two_div_ok"><input type="text" id="departmentName" name="departmentName" class="user" placeholder="부서를 입력해 주세요." v-model="userTb.departmentName" maxlength="20"></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass"><label for="userEmail">이메일 *</label></span></div>
+        <div class="two_div_ok"><input type="email" id="userEmail" class="user" name="userEmail" placeholder="이메일을 주소 형식으로 입력해 주세요." v-model="userTb.userEmail" @input="emailCheck" maxlength="50" ref="userEmail"></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType a">
+      </div>
+      <div class="secondType b">
+        {{checked.userEmailErrorMessage}}
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass"><label for="officePhone">사무실전화</label></span></div>
+        <div class="two_div_ok"><input type="text" id="officePhone" name="officePhone" class="user" placeholder="숫자만 입력해 주세요.(-)제외" v-model="userTb.officePhone" @input="officePhoneCheck" maxlength="20"></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass"><label for="fax">FAX</label></span></div>
+        <div class="two_div_ok"><input type="text" id="fax" class="user" name="fax" placeholder="숫자만 입력해 주세요.(-)제외" v-model="userTb.fax" @input="FaxCheck" maxlength="20"></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType a">
+        {{checked.userOfficePhoneErrorMessage}}
+      </div>
+      <div class="secondType b">
+        {{checked.userFaxErrorMessage}}
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass"><label for="joiningCompany">입사일자</label></span></div>
+        <div class="two_div_ok"><input type="date" id="joiningCompany" name="joiningCompany" class="user" v-model="userTb.joiningCompany"></div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass"><label for="resignationCompany">퇴사일자</label></span></div>
+        <div class="two_div_ok"><input type="date" name="resignationCompany" id="resignationCompany" class="user" v-model="userTb.resignationCompany"></div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="firstType">
+        <div class="one_div_ok"><span class="spanClass">고용형태</span></div>
+        <div class="two_div_ok">
+          <input type="radio" name="employmentType" value="permanent" v-model="userTb.employmentType">정규직&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="employmentType" value="contract" v-model="userTb.employmentType">계약직&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="employmentType" value="outsourcing" v-model="userTb.employmentType">외주&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="employmentType" value="etc" v-model="userTb.employmentType">기타
+        </div>
+      </div>
+      <div class="secondType">
+        <div class="one_div_ok"><span class="spanClass">상태 *</span></div>
+        <div class="two_div_ok">
+          <input type="radio" name="state" value="holdOffice" v-model="userTb.state">재직&nbsp;&nbsp;&nbsp;
+          <input type="radio" name="state" value="resign" v-model="userTb.state">퇴직&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="good">
+      <div class="one_div_ok notegood"><span class="spanClass">비고</span></div>
+      <div class="two_div_note"><input type="text" class="user" name="note" id="note" placeholder="특이사항을 입력해 주세요." v-model="userTb.note" maxlength="500"></div>
+    </div>
+    <div class="good filesG">
+      <div class="one_div_ok notegood"><span class="fileCh">파일첨부</span></div>
+      <div class="two_div_note">
+        <input type="file" id="files" @change="onChangeFile" ref="file" accept=".gif,.jpg,.jpeg,.png" multiple>
+        <label for="files" class="fileClass">파일선택</label>
+      </div>
+    </div>
+
+    <div class="sub">
+      <button class="last_btn firstbtn" @click="getOut()" type="button">나가기</button>
+      <button class="last_btn secondbtn" @click="user_sub_btn()" type="button">등록</button>
+    </div>
+  </form>
+</div>
+<script src="/plugins/vueJs/vue.js"></script>
+<script src="/plugins/toastr/toastr.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script>
+
+  new Vue({
+    el : "#app",
+    data : {
+        userTb : {
+          userId : '',
+          userPassword : '',
+          userName : '',
+          userPhone : '',
+          userBirth : '',
+          gender : '',
+          userPostAddress : '',
+          userDetailAddress : '',
+          position : '',
+          departmentName : '',
+          userEmail : '',
+          officePhone : '',
+          fax : '',
+          joiningCompany : '',
+          resignationCompany : '',
+          employmentType : '',
+          state : '',
+          note : '',
+          companyId : 'companyChoice'
+        },
+        userIdCheck : {
+           isUserIdCheckButton : false,
+        },
+        checked : {
+           userIdErrorMessage : '',
+           userPasswordErrorMessage : '',
+           userEmailErrorMessage : '',
+           userNameErrorMessage : '',
+           userPhoneErrorMessage : '',
+           userEmailErrorMessage : '',
+           userOfficePhoneErrorMessage : '',
+           userFaxErrorMessage : ''
+        },
+        fileList : [],
+        myCompany : []
+    },
+    methods : {
+        loadData : function () {
+            console.log("fsdsdfsdf");
+            axios.get('/company/getCompanylist')
+                   .then(response => {
+                       console.log(response.data);
+                       this.myCompany = response.data;
+                   })
+                   .catch(error => {
+                       console.error('Error fetching data:', error);
+                   });
+        },
+        addressBtn : function () {
+              const vm = this;
+
+               new daum.Postcode({
+              oncomplete: function(data) {
+              var addr = ''; // 주소 변수
+              var extraAddr = ''; // 참고항목 변수1
+
+              if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                  addr = data.roadAddress;
+              } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                  addr = data.jibunAddress;
+              }
+
+              // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+              if(data.userSelectedType === 'R'){
+                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                      extraAddr += data.bname;
+                  }
+                  if(data.buildingName !== '' && data.apartment === 'Y'){
+                      extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                  }
+                  if(extraAddr !== ''){
+                      extraAddr = ' (' + extraAddr + ')';
+                  }
+                  vm.userTb.userPostAddress = extraAddr;
+
+              } else {
+                  vm.userTb.userPostAddress = '';
+              }
+                  vm.userTb.userPostAddress = data.zonecode;
+                  vm.userTb.userPostAddress = addr;
+          }
+      }).open();
+        },
+       user_sub_btn : function () {
+          const vm = this;
+          if(!(vm.checked.userIdErrorMessage == '') || vm.userTb.userId == null || vm.userTb.userId == ''){
+             vm.$refs.userId.focus();
+             alert("아이디를 입력해주세요");
+             return false;
+          }else if(vm.userIdCheck.isUserIdCheckButton == false){
+             alert("아이디 중복체크를 해주세요.");
+             return false;
+          }else if(!(vm.checked.userPasswordErrorMessage == '') || vm.userTb.userPassword == null || vm.userTb.userPassword == ''){
+             vm.$refs.userPassword.focus();
+             alert("비밀번호를 입력하세요.");
+             return false;
+          }else if(!(vm.checked.userNameErrorMessage == '') || vm.userTb.userName == null || vm.userTb.userName == ''){
+             vm.$refs.userName.focus();
+             alert("이름을 입력하세요.");
+             return false;
+          }else if(!(vm.checked.userPhoneErrorMessage == '') || vm.userTb.userPhone == null || vm.userTb.userPhone == ''){
+             vm.$refs.userPhone.focus();
+             alert("휴대폰번호를 입력하세요.");
+             return false;
+          }else if(vm.userTb.gender == ''){
+             alert("성별을 선택하세요.");
+             return false;
+          }else if(!(vm.checked.userEmailErrorMessage == '') || vm.userTb.userEmail == null || vm.userTb.userEmail == ''){
+             vm.$refs.userEmail.focus();
+             alert("이메일을 입력하세요.");
+             return false;
+          }else if(vm.userTb.state == ''){
+             alert("상태를 선택하세요.");
+             return false;
+          }else if(vm.userTb.companyId == 'companyChoice'){
+             alert("회사를 선택하세요");
+             return false;
+          }
+
+          else {
+            let formData = new FormData();
+            vm.fileList.forEach((file) => formData.append("files", file));
+
+            Object.keys(this.userTb).forEach((key) => {
+               if(this.userTb[key]==null){
+                  formData.append(key, "");
+               } else{
+                  formData.append(key, this.userTb[key]);
+               }
+            })
+            console.log(this.userTb);
+            axios.post('/user/userAddOK', formData)
+              .then(response => {
+                  if(response.data != null) {
+                     location.href = '/user/userList';
+                  } else {
+                    alert("로그요청에 실패하였습니다.");
+                  }
+              })
+              .catch(error => {
+                  console.error("Error fetching data: ", error);
+              })
+            }
+       },
+       onChangeFile : function(e) {
+          const vm = this;
+          vm.fileList = [...vm.$refs.file.files];
+          vm.fileList.forEach(file => {
+                  if(!vm.fileCheck(file)){
+                     vm.removeAllFile();
+                     return false;
+                  }
+          })
+          if(!isFileValidate){
+              return false;
+          }
+       },
+       fileCheck : function(file) {
+          const vm = this;
+          const filename = file.name;
+          const pathpoint = filename.lastIndexOf('.');
+          const filepoint = filename.substring(pathpoint + 1, filename.length);
+          const filetype = filepoint.toLowerCase();
+          const filetypes = ["gif", "jpg", "jpeg", "png", "pptx", "xlsx"];
+          if(filetypes.indexOf(filetype) === -1){
+              alert(filename + "은 업로드 불가한 타입의 파일입니다.");
+              vm.removeAllFile();
+              return false;
+          }
+
+          const maxSize = 10 * 1024 * 1024;
+          if(file.size > maxSize) {
+              alert(filename + "은 10MB 초과하는 파일입니다.");
+              vm.removeAllFile();
+              return false;
+          }
+          return true;
+       },
+       removeAllFile : function () {
+          this.fileList = [];
+       },
+       userIdChk : function () {
+          const vm = this;
+          if(vm.userTb.userId == null || vm.userTb.userId == ""){
+              alert("아이디를 입력해주세요.");
+              return;
+          }
+
+           axios.get('/user/userIdCheck', {
+               params : {
+                  userId : vm.userTb.userId
+               }
+           })
+              .then(response => {
+                  console.log(response.data);
+                  if(response.data.message == "사용 가능한 아이디입니다."){
+                     vm.userIdCheck.isUserIdCheckButton = true;
+                     alert(response.data.message);
+                  }else{
+                     vm.userIdCheck.isUserIdCheckButton = false;
+                     alert(response.data.message);
+                  }
+
+              })
+              .catch(error => {
+                  console.error("Error fetching data: ", error);
+              })
+       },
+       getOut : function () {
+          location.href = "/user/userList";
+       },
+       idCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.userId == null || vm.userTb.userId == ""){
+              vm.checked.userIdErrorMessage = '아이디를 입력해주세요.';
+          }else {
+              vm.checked.userIdErrorMessage = '';
+          }
+          vm.userIdCheck.isUserIdCheckButton = false;
+       },
+       passwordCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.userPassword == null || vm.userTb.userPassword == ""){
+              vm.checked.userPasswordErrorMessage = '비밀번호를 입력해주세요.';
+          }else if(vm.onlyPasswordCheck(vm.userTb.userPassword)){
+              vm.checked.userPasswordErrorMessage = '비밀번호는 대소문자, 특수문자, 숫자를 조합해서 입력해주세요.';
+          }else if(vm.userTb.userPassword.length < 8){
+              vm.checked.userPasswordErrorMessage = '비밀번호는 최소 8자리 이상 입력해주세요.';
+          }else{
+              vm.checked.userPasswordErrorMessage = '';
+          }
+       },
+       onlyPasswordCheck : function(keyword) {
+          const vm = this;
+          passwordEngCheck  = /(?=.*?[a-z])(?=.*?[A-Z])/;
+          passwordNumSpcCheck = /(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/;
+          if(!passwordEngCheck.test(keyword)){
+              return true;
+          }else if(!passwordNumSpcCheck.test(keyword)){
+              return true;
+          }else {
+              return false;
+          }
+       },
+       nameCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.userName == null || vm.userTb.userName == "" || vm.onlyNumberCheck(vm.userTb.userName)){
+              vm.checked.userNameErrorMessage = '이름을 입력해주세요.';
+          }else {
+              vm.checked.userNameErrorMessage = '';
+          }
+       },
+       phoneCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.userPhone == null || vm.userTb.userPhone == ""){
+            vm.checked.userPhoneErrorMessage = '휴대폰번호를 입력해주세요.';
+          }else if(!vm.onlyNumberCheck(vm.userTb.userPhone)){
+            vm.checked.userPhoneErrorMessage = '휴대폰번호를 숫자만 입력해주세요.';
+          }else {
+            vm.checked.userPhoneErrorMessage = '';
+          }
+       },
+       onlyNumberCheck : function(keyword) {
+          const vm = this;
+          const check = /^[0-9]+$/;
+          if(check.test(keyword)){
+             return true;
+          }
+          return false;
+       },
+       emailCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.userEmail == null || vm.userTb.userEmail == ""){
+            vm.checked.userEmailErrorMessage = '이메일주소를 입력해주세요.;';
+          }else if(vm.onlyEmailCheck(vm.userTb.userEmail)){
+            vm.checked.userEmailErrorMessage = '이메일주소를 형식에 맞게 입력해주세요.';
+          }else {
+            vm.checked.userEmailErrorMessage = '';
+          }
+       },
+       onlyEmailCheck : function(keyword) {
+          const vm = this;
+          const check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,5}$/i;
+          if(check.test(keyword)){
+            return false;
+          }
+          return true;
+       },
+       officePhoneCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.officePhone == null || vm.userTb.officePhone == ""){
+            vm.checked.userOfficePhoneErrorMessage = '사무실번호를 입력해주세요.';
+          }else if(!vm.onlyNumberCheck(vm.userTb.officePhone)){
+            vm.checked.userOfficePhoneErrorMessage = '사무실번호를 숫자만 입력해주세요.';
+          }else {
+            vm.checked.userOfficePhoneErrorMessage = '';
+          }
+       },
+       FaxCheck : function(event) {
+          const vm = this;
+          if(vm.userTb.fax == null || vm.userTb.fax == ""){
+            vm.checked.userFaxErrorMessage = '팩스번호를 입력해주세요.';
+          }else if(!vm.onlyNumberCheck(vm.userTb.fax)){
+            vm.checked.userFaxErrorMessage = '팩스번호를 숫자만 입력해주세요.';
+          }else {
+            vm.checked.userFaxErrorMessage = '';
+          }
+       }
+    },
+     mounted() {
+         this.loadData();
+     }
+ })
+</script>
+
+</body>
+</html>

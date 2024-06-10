@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>회사 상세 조회</title>
+  <style>
+    .good {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .gg {
+        flex: 1;
+        margin: 5px;
+        display: flex;
+        border: 1px solid #ccc;
+    }
+
+    .first {
+        flex: 1; /* 좌측과 우측 비율 조정 */
+        font-weight: bold;
+        border-right: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .second {
+        flex: 1; /* 좌측과 우측 비율 조정 */
+        margin-left: 10px;
+        padding: 5px;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <h1>회사 상세조회</h1>
+</div>
+<div id = "app">
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">사업자번호 *</div>
+      <div class = "second">{{companyTb.businessnumber}}</span></div>
+    </div>
+    <div class = "gg">
+      <div class = "first">회사명 *</div>
+      <div class = "second">{{companyTb.company}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">대표전화 *</div>
+      <div class = "second">{{companyTb.representativetelephone}}</div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">FAX</div>
+      <div class = "second"></div>
+    </div>
+    <div class = "gg">
+      <div class = "first">회사 담당자 *</div>
+      <div class = "second">{{companyTb.companyperson}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">회사 담당자 전화 *</div>
+      <div class = "second"></div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">회사 담당자 이메일</div>
+      <div class = "second">{{companyTb.companypersonemail}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">회사 담당자 휴대폰</div>
+      <div class = "second">{{companyTb.companypersonphone}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">등록자</div>
+      <div class = "second"></div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">등록일시</div>
+      <div class = "second"></div>
+    </div>
+    <div class = "gg">
+      <div class = "first">주소</div>
+      <div class = "second">{{companyTb.postaddress}} {{companyTb.detailaddress}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">상태</div>
+      <div class = "second">{{companyTb.status}}</div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">비고</div>
+      <div class = "second">{{companyTb.note}}</div>
+    </div>
+  </div>
+  <div>
+    <button v-on:click="good()">수정하기</button>
+    <button type="button" @click="companyUserAdd">사용자추가</button>
+  </div>
+</div>
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script>
+  new Vue({
+      el : "#app",
+      data: {
+        companyId : 0,
+        companyTb : {
+          company : "",
+          companyperson : "",
+          companypersonephone : "",
+          companypersonemail : "",
+          businessnumber : "",
+          businesstype : "",
+          detailaddress : "",
+          note : "",
+          status : "",
+          wtime : "",
+          representativetelephone : "",
+          postaddress : ""
+        }
+      },
+      methods: {
+        loadData() {
+          this.companyId = [[${companyId}]];
+          console.log(this.companyId);
+          axios.get('/company/getCompanyView/' + this.companyId)
+              .then(response => {
+                this.companyTb = response.data;
+                console.log(this.companyTb);
+              })
+              .catch(error => {
+                console.error('Error fetching data:', error);
+              });
+        },
+        good() {
+          this.companyId = [[${companyId}]];
+          location.href = '/company/companyCorrection/' + this.companyId;
+        },
+        companyUserAdd() {
+          this.companyId = [[${companyId}]];
+          location.href = "/company/companyUserAdd/" + this.companyId;
+        }
+      },
+      mounted() {
+        this.loadData();
+      },
+
+  })
+
+
+</script>
+
+
+</body>
+</html>

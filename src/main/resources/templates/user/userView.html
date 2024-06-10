@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>회사 상세 조회</title>
+  <style>
+    .good {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .gg {
+        flex: 1;
+        margin: 5px;
+        display: flex;
+        border: 1px solid #ccc;
+    }
+
+    .first {
+        flex: 1; /* 좌측과 우측 비율 조정 */
+        font-weight: bold;
+        border-right: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .second {
+        flex: 1; /* 좌측과 우측 비율 조정 */
+        margin-left: 10px;
+        padding: 5px;
+    }
+
+    .ddddd{
+       cursor : pointer;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <h1>사용자 정보 상세</h1>
+</div>
+<div id = "app">
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">아이디</div>
+      <div class = "second">{{userTb.userId}}</span></div>
+    </div>
+    <div class = "gg">
+      <div class = "first">이름</div>
+      <div class = "second">{{userTb.userName}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">휴대폰</div>
+      <div class = "second">{{userTb.userPhone}}</div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">생년월일</div>
+      <div class = "second">{{userTb.userBirth}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">주소</div>
+      <div class = "second">{{userTb.userPostAddress}} {{userTb.userDetailAddress}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">성별</div>
+      <div class = "second">{{userTb.gender}}</div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">가입일시</div>
+      <div class = "second">{{userTb.writeTime}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">이메일</div>
+      <div class = "second">{{userTb.userEmail}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">고용형태</div>
+      <div class = "second">{{userTb.employmentType}}</div>
+    </div>
+  </div>
+
+  <div class = "good">
+    <div class = "gg">
+      <div class = "first">회사</div>
+      <div class = "second">{{userTb.companyName}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">상태</div>
+      <div class = "second">{{userTb.state}}</div>
+    </div>
+    <div class = "gg">
+      <div class = "first">직위</div>
+      <div class = "second">{{userTb.position}}</div>
+    </div>
+  </div>
+  <div>
+    첨부파일
+    <ul>
+      <li v-for="fileInfo in userTb.files" :key="fileInfo.id">
+        <span @click="fileDownload(fileInfo.id)" class="ddddd">{{ fileInfo.fileName }}</span>
+      </li>
+    </ul>
+  </div>
+  <div>
+  </div>
+</div>
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script>
+
+  new Vue({
+      el : "#app",
+      data: {
+        id : 0,
+        userTb : {}
+      },
+      methods: {
+        loadData() {
+          this.id = [[${id}]];
+          console.log(this.id);
+          axios.get('/user/getUserView/' + this.id)
+              .then(response => {
+                this.userTb = response.data;
+                console.log(this.userTb);
+              })
+              .catch(error => {
+                console.error('Error fetching data:', error);
+              });
+        },
+        fileDownload(fileId) {
+           console.log("===");
+           console.log(fileId);
+
+           window.open('/user/fileDownload' + fileId, '_blank');
+        }
+      },
+      mounted() {
+        this.loadData();
+      }
+  })
+
+</script>
+
+</body>
+</html>

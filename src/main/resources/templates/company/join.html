@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+
+<!--    #app {-->
+<!--  max-width: 800px;-->
+<!--  margin: 0 auto;-->
+<!--  padding: 20px;-->
+<!--}-->
+<!--table {-->
+<!--  width: 100%;-->
+<!--  border-collapse: collapse;-->
+<!--  margin-bottom: 20px;-->
+<!--}-->
+
+<!--/* 테이블 셀 스타일 */-->
+<!--th, td {-->
+<!--  padding: 10px;-->
+<!--  border: 1px solid #ddd;-->
+<!--  text-align: left;-->
+<!--}-->
+
+<!--/* 입력 상자 스타일 */-->
+<!--input[type="text"],-->
+<!--input[type="email"],-->
+<!--select,-->
+<!--textarea {-->
+<!--  width: calc(100% - 20px);-->
+<!--  padding: 10px;-->
+<!--  margin-bottom: 10px;-->
+<!--  box-sizing: border-box;-->
+<!--}-->
+
+<!--/* 버튼 스타일 */-->
+<!--button {-->
+<!--  padding: 10px;-->
+<!--  background-color: #4CAF50;-->
+<!--  color: white;-->
+<!--  border: none;-->
+<!--  border-radius: 5px;-->
+<!--  cursor: pointer;-->
+<!--}-->
+
+<!--button:hover {-->
+<!--  background-color: #45a049;-->
+<!--}-->
+
+<!--/* 입력 상자에 에러가 있을 때의 스타일 */-->
+<!--input.error {-->
+<!--  border-color: red;-->
+<!--}-->
+
+<!--/* 에러 메시지 스타일 */-->
+<!--span.helper-text {-->
+<!--  color: red;-->
+<!--  display: none;-->
+<!--}-->
+
+<!--span.helper-text.show {-->
+<!--  display: block;-->
+<!--}-->
+  </style>
+</head>
+<body>
+<div id = "app">
+<form method = "post">
+  <table border="1">
+    <caption>회사 정보 등록</caption>
+    <tr>
+      <td>사업자 번호 *</td>
+      <td>
+        <select name = "businesstype" v-model="companyTb.businesstype">
+          <option value="selectNo">선택</option>
+          <option value="SoleProprietorship">개인사업자</option>
+          <option value="CorporateBusiness">법인사업자</option>
+        </select>
+        <input type="text" name="businessnumber" id = "businessnumber" class = "businessnumber" placeholder="사업자번호를 입력하세요." v-model="companyTb.businessnumber" @change="onchangeBusinessNumber()" >
+        <button type="button" @click="BusinessNumberCheck()">중복체크</button><br>
+          <span v-show="businessNumberValidate()">{{BusinessNumber.errorMSG}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>회사명 *</td>
+      <td>
+        <input type="text" name="company" id="company" class="company" placeholder="회사명을 입력하세요." v-model="companyTb.company" @change="onchangeCompany()"><br>
+        <span v-show="companyValidate()">회사명을 입력하세요.</span>
+      </td>
+    </tr>
+    <tr>
+      <td>회사 담당자 *</td>
+      <td>
+        <input type="text" name="companyperson" id="companyperson" class="companyperson" placeholder="회사 담당자를 텍스트로 입력하세요." v-model="companyTb.companyperson">
+      </td>
+    </tr>
+    <tr>
+      <td>회사 담당자 이메일</td>
+      <td>
+        <input type="email" name="companypersonemail" id="companypersonemail" class="companypersonemail" placeholder="회사 담당자 이메일 주소를 형식에 맞게 입력하세요." v-model="companyTb.companypersonemail">
+      </td>
+    </tr>
+    <tr>
+      <td>대표 전화*</td>
+      <td>
+        <input type="text" name="representativetelephone" id="representativetelephone" class="representativetelephone" placeholder="대표 전화 번호를 숫자만 입력하세요." v-model="companyTb.representativetelephone">
+      </td>
+    </tr>
+    <tr>
+      <td>회사 담당자 휴대폰</td>
+      <td>
+        <input type="text" name="companypersonphone" id="companypersonphone" class="companypersonphone" placeholder="휴대폰 번호를 숫자만 입력하세요." v-model="companyTb.companypersonphone">
+      </td>
+    </tr>
+    <tr>
+      <td>상태</td>
+      <td>
+        <input type="radio" name="status" value="using" v-model="companyTb.status"> 사용중
+        <input type="radio" name="status" value="standby" v-model="companyTb.status"> 대기중
+        <input type="radio" name="status" value="stop" v-model="companyTb.status"> 사용중지
+      </td>
+    </tr>
+    <tr>
+      <td>주소 *</td>
+      <td>
+        <input type="text" name="postaddress" id="address1" class="address1" placeholder="주소를 검색해 주세요." v-model="companyTb.postaddress"><input type="button" onclick="addressBtn()" value="주소검색"><br>
+        <input type="text" name="detailaddress" id="address2" class="address2" placeholder="상세 주소를 입력해 주세요." v-model="companyTb.detailaddress">
+      </td>
+    </tr>
+    <tr>
+      <td>비고</td>
+      <td>
+        <textarea name="note" placeholder="특이사항을 입력해 주세요." rows="3" cols="40" v-model="companyTb.note"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>로고파일</td>
+      <td>
+        <input type="text" placeholder="파일을 드래그 앤 드랍 해주세요.">
+        <input type="button" value="파일선택">
+      </td>
+    </tr>
+  </table>
+  <input type="button" value="등록" id="submit_btn" class="submit_btn" @click="joinGood()">
+  <input type="reset" value="나가기" id="reset_btn" class="reset_btn">
+
+</form>
+</div>
+<script src="/plugins/vueJs/vue.js"></script>
+<script src="/plugins/toastr/toastr.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  function addressBtn() {
+      new daum.Postcode({
+          oncomplete: function(data) {
+              var addr = ''; // 주소 변수
+              var extraAddr = ''; // 참고항목 변수
+
+              if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                  addr = data.roadAddress;
+              } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                  addr = data.jibunAddress;
+              }
+
+              // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+              if(data.userSelectedType === 'R'){
+                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                      extraAddr += data.bname;
+                  }
+                  if(data.buildingName !== '' && data.apartment === 'Y'){
+                      extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                  }
+                  if(extraAddr !== ''){
+                      extraAddr = ' (' + extraAddr + ')';
+                  }
+                  document.getElementById("address1").value = extraAddr;
+
+              } else {
+                  document.getElementById("address1").value = '';
+              }
+              document.getElementById('address1').value = data.zonecode;
+              document.getElementById("address1").value = addr;
+              document.getElementById("address2").focus();
+          }
+      }).open();
+  }
+
+ new Vue({
+       el : "#app",
+       data : {
+          companyTb : {
+            company : "",
+            companyperson : "",
+            companypersonephone : "",
+            companypersonemail : "",
+            businessnumber : "",
+            businesstype : "selectNo",
+            detailaddress : "",
+            note : "",
+            status : "",
+            representativetelephone : "",
+            postaddress : ""
+          },
+          BusinessNumber : {
+             isBusinessNumberBtn : false,
+             requestMSG : false,
+             errorMSG : ''
+          }
+       },
+       methods : {
+          businessNumberValidate: function () {
+              const vm = this;
+              if(vm.companyTb.businessnumber == null || vm.companyTb.businessnumber == "" || !vm.isBusinessNumberChk()){
+                  vm.BusinessNumber.errorMSG = '사업자번호를 입력하세요.';
+                  return true;
+              }else{
+                  vm.BusinessNumber.errorMSG = '';
+                  return false;
+              }
+              return false;;
+          },
+          BusinessNumberCheck : function (){
+             const vm = this;
+             if(vm.companyTb.businessnumber == null || vm.companyTb.businessnumber == ""){
+                alert("사업자번호를 입력해주세요.");
+                return;
+             }else if(!vm.isBusinessNumberChk()){
+                alert("사업자번호는 숫자만 입력해주세요.");
+                return;
+             }
+             vm.BusinessNumber.isBusinessNumberBtn = true;
+
+             axios.get('/company/BusinessNumberChk', {
+                 params : {
+                    businessnumber : vm.companyTb.businessnumber
+                 }
+             })
+             .then(response => {
+                  vm.requestMSG = response.data;
+                  if(vm.requestMSG){
+                   vm.BusinessNumber.isBusinessNumberBtn = true;
+                     alert("이미 존재하는 사업자 번호입니다.");
+                  }else{
+                     alert("사용 가능한 사업자 번호입니다.");
+                  }
+             })
+             .catch(error => {
+                  console.error("error fetching data:" , error);
+              })
+          },
+          isBusinessNumberChk : function () {
+              const vm = this;
+            	return /^[0-9]+$/.test(vm.companyTb.businessnumber);
+          },
+          onchangeBusinessNumber : function () {
+            const vm = this;
+            console.log("온");
+            if(vm.companyTb.businesstype=="selectNo"){
+              console.log("=========");
+              alert("사업자 타입을 선택해주세요.");
+              return;
+            }
+          },
+          onchangeCompany : function () {
+             const vm = this;
+             if(vm.companyTb.company == "" || vm.companyTb.company == null){
+               alert("회사명을 입력하세요.");
+               return;
+             }
+          },
+          joinGood(){
+              let formData = new FormData();
+              Object.keys(this.companyTb).forEach((key) => {
+                if(this.companyTb[key]==null){
+                  formData.append(key, "")
+                }else{
+                  formData.append(key, this.companyTb[key])
+                }
+              })
+
+              axios.post('/company/joinOK' , formData)
+                .then(response => {
+                    if(response.data == true){
+                     location.href = '/company/companylist';
+                    }
+                    else{
+                      console.log(response.data);
+                    }
+                })
+                .catch(error => {
+                   console.error("Error fetching data:", error);
+                })
+
+          },
+          companyValidate : function () {
+
+          }
+       }
+    })
+
+</script>
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+</body>
+</html>
