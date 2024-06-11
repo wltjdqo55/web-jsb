@@ -288,6 +288,11 @@
 <script src="/plugins/toastr/toastr.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+
 <script>
 
   new Vue({
@@ -603,9 +608,13 @@
           }
        }
     },
-     mounted() {
+     filters: $.extend({}, vueFilters, {}),
+      computed: {},
+      watch: {},
+      created : {},
+      mounted() {
          this.loadData();
-     }
+      }
  })
 </script>
 
