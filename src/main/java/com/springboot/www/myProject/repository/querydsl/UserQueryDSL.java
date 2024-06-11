@@ -1,7 +1,6 @@
 package com.springboot.www.myProject.repository.querydsl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.springboot.www.myProject.entity.entity.UserTb;
 import com.springboot.www.myProject.entity.vo.UserVO;
@@ -50,33 +49,29 @@ public class UserQueryDSL {
   }
 
   public UserTb loginCheck(UserVO userVO){
-    return jpaQueryFactory
-        .selectFrom(userTb)
-        .where(
-            WhereUserId(userVO).and(WhereUserPassword(userVO))
-        )
-        .fetchOne();
+        if(encoder.matches(userVO.getUserPassword(), actualPassword(userVO))){
+          return jpaQueryFactory
+              .selectFrom(userTb)
+              .where(
+                  WhereUserId(userVO)
+              )
+              .fetchOne();
+        }
+        else{
+          return null;
+        }
 
   }
+
+  private String actualPassword(UserVO userVO){
+    return jpaQueryFactory.select(userTb.userPassword)
+        .from(userTb)
+        .where(userTb.userId.eq(userVO.getUserId()))
+        .fetchOne();
+  }
+
 
   private BooleanExpression WhereUserId(UserVO userVO){
         return userTb.userId.eq(userVO.getUserId());
-  }
-
-  private BooleanExpression WhereUserPassword(UserVO userVO){
-    StringPath userPasswordPath = userTb.userPassword;
-    String actualPassword = jpaQueryFactory.select(userPasswordPath)
-        .from(userTb)
-        .where()
-        .fetchOne();
-    System.out.println(actualPassword);
-    System.out.println(userTb.userPassword.eq(userVO.getUserPassword()));
-    return userTb.userPassword.eq(userVO.getUserPassword());
-//    if(encoder.matches(userVO.getUserPassword(), actualPassword)){
-//      return Expressions.asBoolean(true);
-//    }
-//    else{
-//      return Expressions.asBoolean(false);
-//    }
   }
 }
