@@ -19,14 +19,6 @@ public class UserQueryDSL {
   private final JPAQueryFactory jpaQueryFactory;
   private final BCryptPasswordEncoder encoder;
 
-//  public void updateUserAdd(long companyId , long userId){
-//      jpaQueryFactory
-//          .update(userTb)
-//          .set(userTb.companyTb, new CompanyTb(companyId))
-//          .where(userTb.id.eq(userId))
-//          .execute();
-//  }
-
 
   public List<UserTb> search(UserVO userVO){
     return jpaQueryFactory

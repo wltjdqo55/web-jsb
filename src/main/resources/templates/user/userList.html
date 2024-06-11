@@ -49,8 +49,8 @@
       <td><a :href = "'/user/userView/' + user.id" >{{user.userId}}</a></td>
       <td><a :href = "'/user/userView/' + user.id" >{{user.userName}}</a></td>
       <td>{{user.companyName}}</td>
-      <td>{{user.userPhone}}</td>
-      <td>{{user.officePhone}}</td>
+      <td>{{user.userPhone | tel }}</td>
+      <td>{{user.officePhone | tel }}</td>
       <td>{{user.userBirth}}</td>
       <td>{{user.userPostAddress}} {{user.userDetailAddress}}</td>
       <td>{{user.writeTime}}</td>
@@ -64,6 +64,14 @@
 </div>
 <script src="/plugins/vueJs/vue.js"></script>
 <script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+
+<script src="/prototype/static/plugins/tippy/tippy-bundle.umd.min.js"></script>
+
 <script>
     new Vue({
         el : "#app",
@@ -79,7 +87,6 @@
                 const vm = this;
                 axios.get('/user/userGetList')
                   .then(response => {
-                      console.log(response.data);
                       this.list = response.data;
                   })
                   .catch(error => {
@@ -103,6 +110,14 @@
                 })
            }
         },
+        phoneAutoHyphen : function (phone) {
+            console.log(phone);
+            return phone.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+        },
+        filters: $.extend({}, vueFilters, {}),
+        computed: {},
+        watch: {},
+        created : {},
         mounted() {
            this.loadData();
         }
