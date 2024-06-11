@@ -38,7 +38,7 @@
   <div class = "good">
     <div class = "gg">
       <div class = "first">사업자번호 *</div>
-      <div class = "second">{{companyTb.businessnumber}}</span></div>
+      <div class = "second">{{companyTb.businessnumber | biz}}</span></div>
     </div>
     <div class = "gg">
       <div class = "first">회사명 *</div>
@@ -46,7 +46,7 @@
     </div>
     <div class = "gg">
       <div class = "first">대표전화 *</div>
-      <div class = "second">{{companyTb.representativetelephone}}</div>
+      <div class = "second">{{companyTb.representativetelephone | tel}}</div>
     </div>
   </div>
 
@@ -72,7 +72,7 @@
     </div>
     <div class = "gg">
       <div class = "first">회사 담당자 휴대폰</div>
-      <div class = "second">{{companyTb.companypersonphone}}</div>
+      <div class = "second">{{companyTb.companypersonphone | tel}}</div>
     </div>
     <div class = "gg">
       <div class = "first">등록자</div>
@@ -108,11 +108,6 @@
 </div>
 <script src="/plugins/vueJs/vue.js"></script>
 <script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
-<script src="/dist/jquery/jquery.js"></script>
-<script src="/dist/jquery/jquery.min.js"></script>
-<script src="/dist/js/toggles-list-filter.js"></script>
-<script src="/dist/js/vueCommon.js"></script>
-
 <script>
   new Vue({
       el : "#app",
@@ -155,6 +150,9 @@
           location.href = "/company/companyUserAdd/" + this.companyId;
         }
       },
+      computed: {},
+      watch: {},
+      created : {},
       filters: $.extend({}, vueFilters, {}),
       computed: {},
       watch: {},
@@ -162,7 +160,6 @@
       mounted() {
          this.loadData();
       }
-
   })
 
 

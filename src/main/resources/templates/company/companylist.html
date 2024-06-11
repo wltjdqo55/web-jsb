@@ -52,10 +52,10 @@
           <td>{{company.id}}</td>
           <td><a :href = "'/company/companyView/' + company.id" >{{company.company}}</a></td>
           <td>{{company.businesstype}}</td>
-          <td>{{company.businessnumber}}</td>
+          <td>{{company.businessnumber | biz}}</td>
           <td>{{company.companyperson}}</td>
-          <td>{{company.companypersonphone}}</td>
-          <td>{{company.representativetelephone}}</td>
+          <td>{{company.companypersonphone | tel}}</td>
+          <td>{{company.representativetelephone | tel}}</td>
           <td>{{company.status}}</td>
           <td>{{company.postaddress}}{{company.detailaddress}}</td>
           <td>{{company.writeTime}}</td>

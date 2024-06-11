@@ -26,4 +26,15 @@ const vueFilters = {
         }
         return vv;
     },
+    biz: function (v) {
+        let vv = "";
+        if (v == null) {
+            vv = "";
+        } else if (v.length == 10) {
+            vv = v.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+        } else {
+            vv = v;
+        }
+        return vv;
+    }
 };
