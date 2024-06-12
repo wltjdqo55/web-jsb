@@ -1,18 +1,12 @@
 package com.springboot.www.myProject.entity.dto;
 
-import com.springboot.www.myProject.eNum.eNumUserState;
-import com.springboot.www.myProject.entity.entity.FileTb;
-import com.springboot.www.myProject.entity.entity.UserCompanyTb;
 import com.springboot.www.myProject.entity.entity.UserTb;
-import com.springboot.www.myProject.entity.vo.UserVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +15,8 @@ public class UserDTO {
   long id;
 
   private String userId;
+
+  private String userPassword;
 
   private String userName;
 
@@ -85,7 +81,7 @@ public class UserDTO {
     this.resignationCompany = userTb.getResignationCompany();
     this.note = userTb.getNote();
     this.writeTime = userTb.getWriteTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+    this.userPassword = userTb.getUserPassword();
     this.companyName = userTb.getCompanyTb().getCompany();
 //    this.companyId = userTb.getCompanyTb().getId();
 

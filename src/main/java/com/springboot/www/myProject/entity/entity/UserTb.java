@@ -6,7 +6,6 @@ import com.springboot.www.myProject.eNum.eNumUserState;
 import com.springboot.www.myProject.entity.vo.UserVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -73,17 +72,17 @@ public class UserTb {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id")
   private CompanyTb companyTb;
-//
+  //
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
   private List<FileTb> files = new ArrayList<>();
 
-//  public UserTb(long id){
+  //  public UserTb(long id){
 //
 //    this.companyTb = new CompanyTb(id);
 //  }
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_company_table")
-    private List<UserCompanyTb> list = new ArrayList<>();
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_company_table")
+  private List<UserCompanyTb> list = new ArrayList<>();
 
 
   public UserTb(UserVO userVO) {
