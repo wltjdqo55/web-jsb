@@ -171,8 +171,10 @@ public class UserService {
 //    userVO.setUserPassword(encoder.encode(userVO.getUserPassword()));
     System.out.println(userVO.getUserPassword());
     System.out.println(userVO.getUserId());
-    UserTb userTb = userQueryDSL.loginCheck(userVO);
-    return userQueryDSL.loginCheck(userVO) != null;
+    UserDTO userTb = userRepository.findOneByUserId(userVO.getUserId()).orElse(new UserDTO());
+    return encoder.matches(userVO.getUserPassword(), userTb.getUserPassword());
+//    UserTb userTb = userQueryDSL.loginCheck(userVO);
+//    return userQueryDSL.loginCheck(userVO) != null;
   }
 
 }

@@ -38,31 +38,4 @@ public class UserQueryDSL {
     }
     return null;
   }
-
-  public UserTb loginCheck(UserVO userVO){
-        if(encoder.matches(userVO.getUserPassword(), actualPassword(userVO))){
-          return jpaQueryFactory
-              .selectFrom(userTb)
-              .where(
-                  WhereUserId(userVO)
-              )
-              .fetchOne();
-        }
-        else{
-          return null;
-        }
-
-  }
-
-  private String actualPassword(UserVO userVO){
-    return jpaQueryFactory.select(userTb.userPassword)
-        .from(userTb)
-        .where(userTb.userId.eq(userVO.getUserId()))
-        .fetchOne();
-  }
-
-
-  private BooleanExpression WhereUserId(UserVO userVO){
-        return userTb.userId.eq(userVO.getUserId());
-  }
 }
