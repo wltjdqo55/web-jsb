@@ -168,13 +168,10 @@ public class UserService {
   }
 
   public boolean loginCheck(UserVO userVO){
-//    userVO.setUserPassword(encoder.encode(userVO.getUserPassword()));
     System.out.println(userVO.getUserPassword());
     System.out.println(userVO.getUserId());
-    UserDTO userTb = userRepository.findOneByUserId(userVO.getUserId()).orElse(new UserDTO());
-    return encoder.matches(userVO.getUserPassword(), userTb.getUserPassword());
-//    UserTb userTb = userQueryDSL.loginCheck(userVO);
-//    return userQueryDSL.loginCheck(userVO) != null;
+    UserDTO userDTO = userRepository.findOneByUserId(userVO.getUserId()).orElse(new UserDTO());
+    return encoder.matches(userVO.getUserPassword(), userDTO.getUserPassword());
   }
 
 }
