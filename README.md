@@ -11,7 +11,8 @@
 * #### 백엔드 : <img src="https://img.shields.io/badge/JAVA-1572B6?style=flat-square&logo=JAVA&logoColor=white"/> <img src="https://img.shields.io/badge/JPA-1572B6?style=flat-square&logo=JPA&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Securit&logoColor=white"/>
 
 * #### 데이터베이스 : <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/>
-  
+
+
 ## 기능
 
 * 사용자 인증 및 권한 관리 (Spring Security 사용)
@@ -19,3 +20,34 @@
 * 사용자 인터페이스 및 프론트엔드 개발 (Vue.js, HTML, CSS 사용)
 * RESTful API 설계 및 구현
 * 회원가입 시 정규식 사용 (비밀번호, 이메일 등)
+
+## 디렉토리 구조
+    java
+    ├─ com
+    |    └─ springboot
+    |       └─ www
+    |          └─ myproject
+    |             ├─ config
+    |             ├─ controller
+    |             ├─ entity
+    |             |     ├─ dto
+    |             |     ├─ entity
+    |             |     └─ vo
+    |             ├─ eNum
+    |             ├─ repository
+    |             |     ├─ jpa_spring
+    |             |     └─ querydsl
+    |             └─ service
+    |
+    └─ resources
+        ├─ static
+        |    ├─ dist
+        |    |  ├─ jquery
+        |    |  └─ js
+        |    └─ plugins
+        |       ├─ axios
+        |       ├─ toastr
+        |       └─ vueJs
+        └─ templates
+             ├─ company
+             └─ user
