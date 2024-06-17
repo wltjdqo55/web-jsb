@@ -15,7 +15,7 @@
 
 ## 기능
 
-* 사용자 인증 및 권한 관리 (Spring Security 사용)
+* 사용자 인증 및 권한 관리 (Spring Security 사용) - Bcryptpasswordencoder 사용
 * 데이터베이스 연동 및 ORM (JPA , queryDSL 사용)
 * 사용자 인터페이스 및 프론트엔드 개발 (Vue.js, HTML, CSS 사용)
 * RESTful API 설계 및 구현
