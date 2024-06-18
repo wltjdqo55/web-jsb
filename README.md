@@ -40,14 +40,14 @@
     |             └─ service
     |
     └─ resources
-    ├─ static
-    |    ├─ dist
-    |    |  ├─ jquery
-    |    |  └─ js
-    |    └─ plugins
-    |       ├─ axios
-    |       ├─ toastr
-    |       └─ vueJs
-    └─ templates
-    ├─ company
-    └─ user
+        ├─ static
+        |    ├─ dist
+        |    |  ├─ jquery
+        |    |  └─ js
+        |    └─ plugins
+        |       ├─ axios
+        |       ├─ toastr
+        |       └─ vueJs
+        └─ templates
+        ├─ company
+        └─ user
