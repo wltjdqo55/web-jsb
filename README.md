@@ -21,7 +21,7 @@
 * RESTful API 설계 및 구현
 * 회원가입 시 정규식 사용 (비밀번호, 이메일 등)
 
-## 디렉토리 구조
+## 구성 - MVC 패턴
     java
     ├─ com
     |    └─ springboot
