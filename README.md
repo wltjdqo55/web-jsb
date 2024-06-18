@@ -21,92 +21,33 @@
 * RESTful API 설계 및 구현
 * 회원가입 시 정규식 사용 (비밀번호, 이메일 등)
 
-## 구성 - MVC 패턴
+## 디렉토리 구조 - MVC 패턴
     java
     ├─ com
     |    └─ springboot
     |       └─ www
     |          └─ myproject
     |             ├─ config
-    |             |     QuerydslConfig.java
-    |             |
     |             ├─ controller
-    |             |     CompanyController.java
-    |             |     UserController.java
-    |             |
     |             ├─ entity
     |             |     ├─ dto
-    |             |     |   CompanyDTO.java
-    |             |     |   FileDTO.java
-    |             |     |   UserCompanyDTO.java
-    |             |     |   UserDTO.java
-    |             |     |
     |             |     ├─ entity
-    |             |     |   CompanyTb.java
-    |             |     |   FileTb.java
-    |             |     |   UserCompanyTb.java
-    |             |     |   UserTb.java
-    |             |     |
     |             |     └─ vo
-    |             |         CompanyVO.java
-    |             |         UserVO.java
-    |             |
     |             ├─ eNum
-    |             |     eNumBusinessType.java
-    |             |     eNumStatus.java
-    |             |     eNumUserEmploymentType.java
-    |             |     eNumUserGender.java
-    |             |     eNumUserState.java
-    |             |     
     |             ├─ repository
     |             |     ├─ jpa_spring
-    |             |     |   CompanyRepository.java
-    |             |     |   FileRepository.java
-    |             |     |   UserCompanyRepository.java
-    |             |     |   UserRepository.java
-    |             |     |
     |             |     └─ querydsl
-    |             |         CompanyQueryDSL.java
-    |             |         UserQueryDSL.java
     |             └─ service
-    |                   CompanyService.java
-    |                   ConfigService.java
-    |                   UserService.java
     |
     └─ resources
-        ├─ static
-        |    ├─ dist
-        |    |  ├─ jquery
-        |    |  |   jquery.js
-        |    |  |   jquery.min.js
-        |    |  |
-        |    |  └─ js
-        |    |      toggles-list-filter.js
-        |    |      vueCommon.js
-        |    |
-        |    └─ plugins
-        |       ├─ axios
-        |       |   axios.min.js
-        |       |
-        |       ├─ toastr
-        |       |   toastr.css
-        |       |   toastr.js.map
-        |       |   toastr.min.css
-        |       |   toastr.min.js
-        |       |
-        |       └─ vueJs
-        |           vue.js
-        |
-        └─ templates
-             ├─ company
-             |      companyCorrection.html
-             |      companylist.html
-             |      companyUserAdd.html
-             |      companyView.html
-             |      join.html
-             |
-             └─ user
-                    login.html
-                    userAdd.html
-                    userList.html
-                    userView.html
+    ├─ static
+    |    ├─ dist
+    |    |  ├─ jquery
+    |    |  └─ js
+    |    └─ plugins
+    |       ├─ axios
+    |       ├─ toastr
+    |       └─ vueJs
+    └─ templates
+    ├─ company
+    └─ user
