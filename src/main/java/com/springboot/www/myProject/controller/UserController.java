@@ -1,27 +1,16 @@
 package com.springboot.www.myProject.controller;
 
-import com.springboot.www.myProject.entity.dto.CompanyDTO;
 import com.springboot.www.myProject.entity.dto.UserDTO;
-import com.springboot.www.myProject.entity.entity.CompanyTb;
-import com.springboot.www.myProject.entity.entity.UserTb;
 import com.springboot.www.myProject.entity.vo.UserVO;
 import com.springboot.www.myProject.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

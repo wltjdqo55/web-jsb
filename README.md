@@ -48,6 +48,6 @@
         |       ├─ axios
         |       ├─ toastr
         |       └─ vueJs
-        ├─ templates
-        ├─ company
-        └─ user
+        └─ templates
+            ├─ company
+            └─ user
